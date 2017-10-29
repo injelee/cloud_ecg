@@ -1,0 +1,12 @@
+name: cloud_ecg
+dependencies:
+  - python=3.6
+  - numpy
+  - ipython
+  - pytest
+  - pytest-cov
+  - pytest-pep8
+  - pandas
+  - flask
+
+  
