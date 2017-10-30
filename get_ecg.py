@@ -13,7 +13,7 @@ class Ecg:
     MIN_DIST = 150
 
     def __init__(self, csv_file=None, update_time=5,
-                 brady_threshold=60, tachy_threshold=100, mins=2):
+                 brady_threshold=60, tachy_threshold=100, user_sec=20):
         """
         Constructor for ECG processing needs the input file(s) to work on and
         time for how often to update the instantaneous HR
@@ -191,22 +191,27 @@ class Ecg:
 
         """
 
-        user_sec = self.mins * self.MIN_SEC
+        # user_sec = self.mins * self.MIN_SEC
 
     # Get number of groups based off of time
-        if user_sec % self.update_time == 0:
-            groups = int(user_sec/self.update_time)
+        if self.user_sec % self.update_time == 0:
+            groups = int(self.user_sec/self.update_time)
+            [self.rawbunches[i:i + groups] for i in range(0, len(self.rawbunches), groups)]
+
     # Taking an extra group if user input mins is between groups
         else:
-            groups = int(math.floor(user_sec/self.update_time) + 1)
+            groups = int(math.floor(self.user_sec/self.update_time) + 1)
 
-        if len(self.raw_bunches) <= groups:  # if user time is > raw data
-            real_bunches = self.raw_bunches
-        else:
-            real_bunches = self.raw_bunches[0:groups]
+        # if len(self.raw_bunches) <= groups:  # if user time is > raw data
+            # real_bunches = self.raw_bunches
+        # else:
+            # real_bunches = self.raw_bunches[0:groups]
 
     # Calculating the avghr
-        self.avg_hr = math.floor(sum(real_bunches)/len(real_bunches))
+        #self.avg_hr = math.floor(sum(real_bunches)/len(real_bunches))
+
+
+
 
     # Calculating brady-/tachycardia
         for i in range(len(real_bunches)):
