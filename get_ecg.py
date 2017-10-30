@@ -63,17 +63,16 @@ class Ecg:
                 self.update_time = int(self.tachy_threshold)
             elif isinstance(self.tachy_threshold, str):
                 raise ValueError('Thresholds cannot be strings or floats')
-            self.mins = mins
-            if isinstance(self.mins, float):
-                self.update_time = int(self.mins)
-            elif isinstance(self.mins, str):
+            self.user_sec = user_sec
+            if isinstance(self.user_sec, float):
+                self.update_time = int(self.user_sec)
+            elif isinstance(self.user_sec, str):
                 raise ValueError('Averaging window must be a number in s')
         self.divided_voltage_array = np.array([])
         self.divided_time_array = np.array([])
         self.total_peaks = []
-        self.avg_hr = None
+        self.avg_hr = []
         self.raw_bunches = []  # This is a list
-        self.real_bunches = []
         self.brady = []
         self.tachy = []
 
@@ -191,27 +190,18 @@ class Ecg:
 
         """
 
-        # user_sec = self.mins * self.MIN_SEC
-
     # Get number of groups based off of time
         if self.user_sec % self.update_time == 0:
             groups = int(self.user_sec/self.update_time)
-            [self.rawbunches[i:i + groups] for i in range(0, len(self.rawbunches), groups)]
 
-    # Taking an extra group if user input mins is between groups
+    # Taking an extra group if user_sec is between groups
         else:
             groups = int(math.floor(self.user_sec/self.update_time) + 1)
 
-        # if len(self.raw_bunches) <= groups:  # if user time is > raw data
-            # real_bunches = self.raw_bunches
-        # else:
-            # real_bunches = self.raw_bunches[0:groups]
+        real_bunches = np.array_split(self.raw_bunches, groups)
 
-    # Calculating the avghr
-        #self.avg_hr = math.floor(sum(real_bunches)/len(real_bunches))
-
-
-
+        for i in range(len(self.raw_bunches)):
+            self.avg_hr = np.vstack([self.avg_hr, real_bunches[i]])
 
     # Calculating brady-/tachycardia
         for i in range(len(real_bunches)):
