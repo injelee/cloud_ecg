@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from groupingmod import chunks
 import math
 
 
@@ -13,7 +14,7 @@ class Ecg:
     MIN_DIST = 150
 
     def __init__(self, csv_file=None, update_time=5,
-                 brady_threshold=60, tachy_threshold=100, user_sec=20):
+                 brady_threshold=60, tachy_threshold=100, user_sec=0):
         """
         Constructor for ECG processing needs the input file(s) to work on and
         time for how often to update the instantaneous HR
@@ -55,17 +56,17 @@ class Ecg:
                 raise ValueError('Update time must be a number')
             self.brady_threshold = brady_threshold
             if isinstance(self.brady_threshold, float):
-                self.update_time = int(self.brady_threshold)
+                self.brady_threshold = int(self.brady_threshold)
             elif isinstance(self.brady_threshold, str):
                 raise ValueError('Thresholds cannot be strings or floats')
             self.tachy_threshold = tachy_threshold
             if isinstance(self.tachy_threshold, float):
-                self.update_time = int(self.tachy_threshold)
+                self.tachy_threshold = int(self.tachy_threshold)
             elif isinstance(self.tachy_threshold, str):
                 raise ValueError('Thresholds cannot be strings or floats')
             self.user_sec = user_sec
             if isinstance(self.user_sec, float):
-                self.update_time = int(self.user_sec)
+                self.user_sec = int(self.user_sec)
             elif isinstance(self.user_sec, str):
                 raise ValueError('Averaging window must be a number in s')
         self.divided_voltage_array = np.array([])
@@ -75,6 +76,8 @@ class Ecg:
         self.raw_bunches = []  # This is a list
         self.brady = []
         self.tachy = []
+        self.real_bunches = []
+        self.groups = None
 
     def prep_data(self):
         """
@@ -192,26 +195,38 @@ class Ecg:
 
     # Get number of groups based off of time
         if self.user_sec % self.update_time == 0:
-            groups = int(self.user_sec/self.update_time)
+            self.groups = int(self.user_sec/self.update_time)
 
     # Taking an extra group if user_sec is between groups
         else:
-            groups = int(math.floor(self.user_sec/self.update_time) + 1)
+            self.groups = int(math.floor(self.user_sec/self.update_time) + 1)
 
-        real_bunches = np.array_split(self.raw_bunches, groups)
-
-        for i in range(len(self.raw_bunches)):
-            self.avg_hr = np.vstack([self.avg_hr, real_bunches[i]])
+    # User specified seconds is more than data set time
+        if self.user_sec > len(self.raw_bunches)*self.update_time:
+            # self.real_bunches = np.array_split(self.raw_bunches, len(self.raw_bunches))
+            self.avg_hr = np.mean(self.raw_bunches)
+            # for i in range(len(self.raw_bunches)):
+            # self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
+    # User specified seconds is <= data set time
+        else:
+            # self.real_bunches = np.array_split(self.raw_bunches, self.groups)
+            self.raw_bunches = self.raw_bunches.tolist()
+            # self.real_bunches = chunks(len(self.raw_bunches), self.groups)
+            for i in range(0, len(self.raw_bunches), self.groups):
+                self.real_bunches.append(self.raw_bunches[i:i + self.groups])
+            for i in range(len(self.real_bunches)):
+                self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
 
     # Calculating brady-/tachycardia
-        for i in range(len(real_bunches)):
-            if self.brady_threshold < real_bunches[i] < self.tachy_threshold:
+        for i in range(len(self.raw_bunches)):
+            if np.logical_and(self.raw_bunches[i] > self.brady_threshold,
+                              self.raw_bunches[i] < self.tachy_threshold):
                 self.tachy.append('False')
                 self.brady.append('False')
-            if real_bunches[i] >= self.tachy_threshold:
+            if self.raw_bunches[i] >= self.tachy_threshold:
                 self.tachy.append('True')
                 self.brady.append('False')
-            elif real_bunches[i] <= self.brady_threshold:
+            elif self.raw_bunches[i] <= self.brady_threshold:
                 self.tachy.append('False')
                 self.brady.append('True')
 
@@ -225,7 +240,8 @@ class Ecg:
         hr_info = open('{}_HR_Information.txt'.format(self.name), 'w')
         hr_info.write("Estimated Instantaneous HR is {} beats per minute.\n"
                       .format(self.raw_bunches))
-        hr_info.write("\nEstimated Average HR is {} beats per minute.\n"
-                      .format(self.avg_hr))
+        hr_info.write("\nEstimated Average HR is {} beats per minute with an averaging"
+                      " window of {} seconds.\n"
+                      .format(self.avg_hr, self.user_sec))
         hr_info.write("\n Tachycardia array is {}.\n".format(self.tachy))
         hr_info.write("\n Bradycardia array is {}.\n".format(self.brady))

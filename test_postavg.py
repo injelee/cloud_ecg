@@ -16,7 +16,7 @@ class testavghr(unittest.TestCase):
     data.get_avghr()
 
     def test_output(self):
-        if isinstance(self.realbunches, list) is True:
+        if isinstance(, list) is True:
             test = 1
         assert test == 1
 
