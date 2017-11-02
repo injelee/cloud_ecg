@@ -185,7 +185,7 @@ class Ecg:
         new_array = np.array(num_of_peaks)
         inst_heart_rate = (new_array / self.update_time)*60
         for i in peak_pos:
-            x = np.argmax(sample_time_array == i)
+            x = np.argmax(self.time_array == i)
             for hr in inst_heart_rate:
                 last = np.argmax(self.raw_bunches == 0)
                 self.raw_bunches[last:x] = hr 
