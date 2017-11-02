@@ -176,19 +176,20 @@ class Ecg:
 
         num_of_peaks = []
         peak_pos = []
+        x = []
         if isinstance(self.update_time, float):
             self.update_time = int(self.update_time)
         for i in range(len(self.total_peaks)):
             num_of_peaks.append(len(self.total_peaks[i]))
-        for i in range(len(self.total_peaks[0])):
-            peak_pos.append([self.total_peaks[0][i][0]])
+            peak_pos.append(self.total_peaks[i][-1][0])
         new_array = np.array(num_of_peaks)
         inst_heart_rate = (new_array / self.update_time)*60
-        for i in peak_pos:
-            x = np.argmax(self.time_array == i)
-            for hr in inst_heart_rate:
-                last = np.argmax(self.raw_bunches == 0)
-                self.raw_bunches[last:x] = hr 
+        for i in range(len(peak_pos)):
+            x.append(np.argmax(self.time_array == peak_pos[i]))
+        for j in range(len(x)):
+            last = np.argmax(self.raw_bunches == 0)
+            self.raw_bunches[last:x[j]] = inst_heart_rate[j]
+
 
 
     def get_avghr(self):
