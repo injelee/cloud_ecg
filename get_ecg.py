@@ -73,7 +73,7 @@ class Ecg:
         self.divided_time_array = np.array([])
         self.total_peaks = []
         self.avg_hr = []
-        self.raw_bunches = []  # This is a list
+        self.raw_bunches = np.zeros(len(self.time_array))  # This is a list
         self.brady = []
         self.tachy = []
         self.real_bunches = []
@@ -174,13 +174,21 @@ class Ecg:
            """
 
         num_of_peaks = []
+        peak_pos = []
         if isinstance(self.update_time, float):
             self.update_time = int(self.update_time)
         for i in range(len(self.total_peaks)):
             num_of_peaks.append(len(self.total_peaks[i]))
+        for i in range(len(self.total_peaks[0])):
+            peak_pos.append([self.total_peaks[0][i][0]])
         new_array = np.array(num_of_peaks)
-        inst_heart_rate = new_array / self.update_time
-        self.raw_bunches = inst_heart_rate * 60
+        inst_heart_rate = (new_array / self.update_time)*60
+        for i in peak_pos:
+            x = np.argmax(sample_time_array == i)
+            for hr in inst_heart_rate:
+                last = np.argmax(self.raw_bunches == 0)
+                self.raw_bunches[last:x] = hr 
+
 
     def get_avghr(self):
         """
