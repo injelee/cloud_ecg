@@ -1,4 +1,4 @@
-from get_ecg import Ecg
+from bme590hrmfixed.get_ecg import Ecg
 import glob
 
 
