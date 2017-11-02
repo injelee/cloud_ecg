@@ -78,6 +78,7 @@ class Ecg:
         self.tachy = []
         self.real_bunches = []
         self.groups = None
+        self.ecg_dict = {}
 
     def prep_data(self):
         """
@@ -229,6 +230,19 @@ class Ecg:
             elif self.raw_bunches[i] <= self.brady_threshold:
                 self.tachy.append('False')
                 self.brady.append('True')
+
+    def as_dict(self):
+        """
+        Returns previous attributes as dictionaries for easier jsonification.
+        :return:
+        """
+        self.ecg_dict = {
+            "averaging_period": self.user_sec,
+            "time_interval": self.time_array,
+            "average_heart_rate": self.avg_hr,
+            "tachycardia_annotations": self.tachy,
+            "bradycardia_annotations": self.brady,
+        }
 
     def get_output(self):
         """
