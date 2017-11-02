@@ -3,6 +3,7 @@ import numpy as np
 import math
 from multiprocessing import Value
 
+
 counter = Value('i',0)
 app = Flask(__name__)
 
