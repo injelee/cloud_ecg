@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv(r'C:\Users\Niranjana\Documents\Python Scripts\test_data\test_data9.csv', header = None)
+df = pd.read_csv(r'/Users/injelee/cloud_ecg/test_data/test_data9.csv', header = None)
 df.columns = ['time', 'voltage']
 df.time = df.time.astype(float)
 df.voltage = df.voltage.astype(float)
