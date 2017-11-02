@@ -16,9 +16,6 @@ def jsonavg():
     :return:
     """
     data = request.json
-    user_sec = data.averaging_period
-    time = data.time
-    voltage = data.voltage
     ecg_data = Ecg(data, update_time=5, brady_threshold=60, tachy_threshold=100,
                    user_sec=20)
     ecg_data.prep_data()

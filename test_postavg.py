@@ -4,19 +4,20 @@ Creating test class for average HR and brady/tachycardia data
 """
 
 import unittest
-import get_ecg
+from get_ecg.py import Ecg
 
 
 class test_avg_hr(unittest.TestCase):
-    data = get_ecg(json_file=filename, update_time=5,
-                     brady_threshold=60, tachy_threshold=100, mins=2)
-    data.prep_data()
-    data.get_max_peak()
-    data.get_inst_hr()
-    data.get_avghr()
 
     def test_output(self):
-        if isinstance(, list) is True:
+        data = Ecg(csv_file=filename, update_time=5,
+                   brady_threshold=60, tachy_threshold=100, mins=2)
+        data.prep_data()
+        data.get_max_peak()
+        data.get_inst_hr()
+        data.get_avghr()
+        data.as_dict()
+        if isinstance(data.ecg_dict(), list) is True:
             test = 1
         assert test == 1
 
