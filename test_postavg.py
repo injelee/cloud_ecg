@@ -7,7 +7,7 @@ import unittest
 import get_ecg
 
 
-class testavghr(unittest.TestCase):
+class test_avg_hr(unittest.TestCase):
     data = get_ecg(json_file=filename, update_time=5,
                      brady_threshold=60, tachy_threshold=100, mins=2)
     data.prep_data()
