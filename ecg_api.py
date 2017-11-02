@@ -1,7 +1,7 @@
 from flask import Flask,jsonify, request
 import numpy as np 
 import math
-from get_ecg.py import Ecg
+from get_ecg import Ecg
 
 app = Flask(__name__)
 

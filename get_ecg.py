@@ -77,8 +77,11 @@ class Ecg:
         self.brady = []
         self.tachy = []
         self.real_bunches = []
-        self.groups = None
         self.ecg_dict = {}
+        self.total_time = None
+        self.indices = []
+        self.rounded_max = None
+        self.data_min = None
 
     def prep_data(self):
         """
@@ -190,8 +193,6 @@ class Ecg:
             last = np.argmax(self.raw_bunches == 0)
             self.raw_bunches[last:x[j]] = inst_heart_rate[j]
 
-
-
     def get_avghr(self):
         """
 
@@ -203,27 +204,31 @@ class Ecg:
 
         """
 
-    # Get number of groups based off of time
-        if self.user_sec % self.update_time == 0:
-            self.groups = int(self.user_sec/self.update_time)
-
-    # Taking an extra group if user_sec is between groups
-        else:
-            self.groups = int(math.floor(self.user_sec/self.update_time) + 1)
+        self.rounded_max = int(math.floor(max(self.time_array)))
+        self.data_min = int(min(self.time_array))
+        self.total_time = self.rounded_max - min(self.time_array)
 
     # User specified seconds is more than data set time
-        if self.user_sec > len(self.raw_bunches)*self.update_time:
+        if self.user_sec > self.total_time:
             # self.real_bunches = np.array_split(self.raw_bunches, len(self.raw_bunches))
             self.avg_hr = np.mean(self.raw_bunches)
-            # for i in range(len(self.raw_bunches)):
-            # self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
+
     # User specified seconds is <= data set time
         else:
-            # self.real_bunches = np.array_split(self.raw_bunches, self.groups)
-            self.raw_bunches = self.raw_bunches.tolist()
             # self.real_bunches = chunks(len(self.raw_bunches), self.groups)
-            for i in range(0, len(self.raw_bunches), self.groups):
-                self.real_bunches.append(self.raw_bunches[i:i + self.groups])
+            # for i in range(0, len(self.raw_bunches), self.user_sec):
+                # self.real_bunches.append(self.raw_bunches[i:i + self.groups])
+            # for i in range(len(self.real_bunches)):
+                # self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
+            for i in range(self.data_min, self.rounded_max, self.user_sec):
+                self.indices.append(((np.abs(self.time_array-i)).argmin()))
+            # When only one index is reported (avg window is large for data)
+            if isinstance(self.indices, np.int64) is True:
+                self.real_bunches.append(self.raw_bunches[0:self.indices])
+                self.real_bunches.append(self.raw_bunches[self.indices:-1])
+            else:
+                for i in range(1, len(self.indices)):
+                    self.real_bunches.append(self.raw_bunches[self.indices[i-1]:self.indices[i]])
             for i in range(len(self.real_bunches)):
                 self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
 

@@ -16,9 +16,10 @@ if __name__ == "__main__":
     for file_name in list_of_files:
         FI = open(file_name, 'r')
         data = Ecg(csv_file=file_name, update_time=5,
-                   brady_threshold=60, tachy_threshold=100, user_sec=15)
+                   brady_threshold=60, tachy_threshold=100, user_sec=5)
         data.prep_data()
         data.get_max_peak()
         data.get_inst_hr()
         data.get_avghr()
         data.get_output()
+        data.as_dict()
