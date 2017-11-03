@@ -17,7 +17,7 @@ def summary():
         data = request.json
 
     try:
-        isinstance(data, dict)
+        isinstance(data, dict) is True
     except ValueError:
         return send_error("The input is not in dict format", 400)  # 400 refers to bad request
 
