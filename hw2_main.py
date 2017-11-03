@@ -19,7 +19,8 @@ if __name__ == "__main__":
     data = csvtojson()
     avg_period = data["averaging_period"]
     ecg_data = Ecg(data, update_time=5,
-                   brady_threshold=60, tachy_threshold=100, user_sec=avg_period)
+                   brady_threshold=60, tachy_threshold=100, user_sec=avg_period,
+                   bradtach=1)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
