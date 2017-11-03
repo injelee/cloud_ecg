@@ -24,5 +24,5 @@ if __name__ == "__main__":
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
     ecg_data.get_avghr()
-    ecg_data.get_output()
+    ecg_data.get_bradtach()
     ecg_data.as_dict()
