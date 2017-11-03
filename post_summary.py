@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from bme590hrmfixed.get_ecg import Ecg
+from bme590hrmfixed.get_ecg3 import Ecg
 import json
 app = Flask(__name__)
 
