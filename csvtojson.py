@@ -1,8 +1,8 @@
 import pandas as pd
 
 
-def csvtojson():
-    df = pd.read_csv(r'/Users/injelee/cloud_ecg/test_data/test_data9.csv', header=None)
+def csvtojson(data):
+    df = pd.read_csv(data, header=None)
     df.columns = ['time', 'voltage']
     df.time = df.time.astype(float)
     df.voltage = df.voltage.astype(float)

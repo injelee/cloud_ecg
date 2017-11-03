@@ -1,7 +1,9 @@
 from flask import Flask,jsonify, request
 import numpy as np 
 import math
-from get_ecg import Ecg
+from bme590hrmfixed.get_ecg3 import Ecg
+from csvtojson import csvtojson
+import csv
 
 app = Flask(__name__)
 
@@ -15,16 +17,22 @@ def jsonavg():
 
     :return:
     """
-    data = request.json
+    # Following two lines are for Postman testing with .csv input
+    data1 = request.files['']
+    data = csvtojson(data1)
+    # data = request.json
     ecg_data = Ecg(data, update_time=5, brady_threshold=60, tachy_threshold=100,
-                   user_sec=20)
+                   user_sec=10)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
     ecg_data.get_avghr()
+    ecg_data.get_bradtach()
     ecg_data.as_dict()
 
-    return jsonify(ecg_data.ecg_dict)
+    json_dict = ecg_data.ecg_dict
+
+    return jsonify(json_dict)
 
 
 
