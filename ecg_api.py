@@ -21,8 +21,9 @@ def jsonavg():
     data1 = request.files['']
     data = csvtojson(data1)
     # data = request.json
+    avg_period = data["averaging_period"]
     ecg_data = Ecg(data, update_time=5, brady_threshold=60, tachy_threshold=100,
-                   user_sec=10)
+                   user_sec=avg_period)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
