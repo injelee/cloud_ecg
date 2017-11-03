@@ -1,6 +1,5 @@
-from flask import Flask,request
+from flask import Flask,request, flaskr
 from ecg_api import inc_count
-import flaskr
 import unittest
 
 class FlaskrTestCase(unittest.TestCase):
