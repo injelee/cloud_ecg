@@ -1,9 +1,9 @@
 import pandas as pd
 
 
-def csvtojson():
-    # df = pd.read_csv(data, header=None)
-    df = pd.read_csv(r'/Users/injelee/Desktop/test_data9_3.csv', header=None)
+def csvtojson(data):
+    df = pd.read_csv(data, header=None)
+    # df = pd.read_csv(r'/Users/injelee/Desktop/test_data9.csv', header=None)
     df.columns = ['averaging_period', 'time', 'voltage']
     df.avg_period = df.averaging_period.astype(float)
     df.time = df.time.astype(float)
