@@ -29,9 +29,14 @@ def jsonavg():
     data = csvtojson(data1)
     # data = request.json
     try:
+        len(data) is 3
+    except TypeError:
+        return send_error("Input dict did not have length 3. Please "
+                          "input dictionary with 3 keys.", 431)
+    try:
         isinstance(data, dict) is True
     except TypeError:
-        return send_error("Input was not of type=dictionary.", )
+        return send_error("Input was not of type=dictionary.", 400)
 
     avg_period = data["averaging_period"]
 
@@ -52,6 +57,11 @@ def jsonavg():
     ecg_data.as_dict()
 
     json_dict = ecg_data.ecg_dict
+
+    try:
+        isinstance(json_dict, dict) is True
+    except TypeError:
+        return send_error("Initial data could not be converted to type=dict.", 500)
 
     return jsonify(json_dict)
 
