@@ -49,7 +49,7 @@ def jsonavg():
                           "or was not initially type float (e.g. str).", 400)
 
     ecg_data = Ecg(data, update_time=5, brady_threshold=60,
-                   tachy_threshold=100, user_sec=avg_period)
+                   tachy_threshold=100, user_sec=avg_period, status=1)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
