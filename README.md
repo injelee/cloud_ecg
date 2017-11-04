@@ -10,9 +10,6 @@ The main file to run is called "ecg_api.py", which will be deployed on a public 
 from any internet connected client (e.g. cloud connected ECG device, iOS/Android applications,
 Web applications, etc).
 
-Please use the following address, followed by the necessary syntax to run on the web:
-http://vcm-1848.vm.duke.edu:5000/
-
 License
 ==============
 We choose to use Apache License, Version 2.0 for our project's license. Because this license provides an express grant of patent rights
