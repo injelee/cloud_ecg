@@ -3,9 +3,10 @@ import numpy as np
 import math
 from bme590hrmfixed.get_ecg3 import Ecg
 from csvtojson import csvtojson
+from multiprocessing import Value
 
 app = Flask(__name__)
-
+counter = Value('i',0)
 
 def send_error(message, code):
     err = {
@@ -13,7 +14,19 @@ def send_error(message, code):
     }
     return jsonify(err), code
 
+@app.route("/api/requests")
+@app.before_request
+def inc_count():
+    """
+    Method that counts number of requests handled by the web service.
+    :params: None
+    :return: number of requests in json format
+    """
+    counter.value += 1
+    count = counter.value
+    return jsonify("Number of requests {}".format(count))
 
+  
 @app.route("/api/heart_rate/average/", methods=["Post"])
 def jsonavg():
     """
@@ -66,6 +79,3 @@ def jsonavg():
                           "converted to type=dict.", 500)
 
     return jsonify(json_dict)
-
-
-

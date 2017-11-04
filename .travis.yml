@@ -16,3 +16,6 @@ install:
 script:
   - py.test # Run the tests
 
+git:
+  submodules: false
+
