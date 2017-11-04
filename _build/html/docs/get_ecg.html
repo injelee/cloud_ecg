@@ -1,0 +1,201 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>get_ecg module &#8212; Cloud_ECG 1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-get_ecg">
+<span id="get-ecg-module"></span><h1>get_ecg module<a class="headerlink" href="#module-get_ecg" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="get_ecg.Ecg">
+<em class="property">class </em><code class="descclassname">get_ecg.</code><code class="descname">Ecg</code><span class="sig-paren">(</span><em>csv_file=None</em>, <em>update_time=5</em>, <em>brady_threshold=60</em>, <em>tachy_threshold=100</em>, <em>user_sec=0</em><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Creating this class to convert raw ECG data of all types into HR data
+and clinical indication of brady-/tachycardia.</p>
+<dl class="attribute">
+<dt id="get_ecg.Ecg.MIN_DIST">
+<code class="descname">MIN_DIST</code><em class="property"> = 150</em><a class="headerlink" href="#get_ecg.Ecg.MIN_DIST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="get_ecg.Ecg.MIN_SEC">
+<code class="descname">MIN_SEC</code><em class="property"> = 60</em><a class="headerlink" href="#get_ecg.Ecg.MIN_SEC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.as_dict">
+<code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns previous attributes as dictionaries for easier jsonification.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.get_avghr">
+<code class="descname">get_avghr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.get_avghr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method gets avghr over user-specified minutes window.
+Also gives clinical indication of tachy/bradycardia,
+based on threshold values</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.get_inst_hr">
+<code class="descname">get_inst_hr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.get_inst_hr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that calculates inst heart rate every update_time seconds
+by counting number of peaks occurring within update_time</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.get_max_peak">
+<code class="descname">get_max_peak</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.get_max_peak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that will find local maximum of an array i.e peaks
+from the each of the divided groups provided by prep_data</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.get_output">
+<code class="descname">get_output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.get_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to save HR output information to a .txt file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="get_ecg.Ecg.prep_data">
+<code class="descname">prep_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_ecg.Ecg.prep_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that prepares data for get_max_peaks. Divides input data into
+groups based on update_time and ensures that they are symmetric</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">none</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Cloud_ECG</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Inje Lee, Jing-Rui Li, Niranjana Shashikumar.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/docs/get_ecg.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
