@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,request
+from flask import Flask, jsonify, request
 from bme590hrmfixed.get_ecg3 import Ecg
 from tests.csvtojson import csvtojson
 from tests.csvtojson_post import csvtojson_post
@@ -31,12 +31,14 @@ def summary():
     try:
         isinstance(data, dict) is True
     except TypeError:
-        return send_error("The input is not in dict format", 400)  # 400 refers to bad request
+        # 400 refers to bad request
+        return send_error("The input is not in dict format", 400)
 
     try:
         len(data["time"]) > 0 and len(data["voltage"]) > 0
     except ValueError:
-        return send_error("The input is empty ", 400)  # 400 refers to bad request
+        # 400 refers to bad request
+        return send_error("The input is empty ", 400)
 
     data = Ecg(data, update_time=5,
                brady_threshold=60, tachy_threshold=100, user_sec=10, status=0)

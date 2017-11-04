@@ -3,6 +3,7 @@ import pandas as pd
 from groupingmod import chunks
 import math
 
+
 # Test Comment
 class Ecg:
 
@@ -210,7 +211,6 @@ class Ecg:
 
     # User specified seconds is more than data set time
         if self.user_sec > self.total_time:
-            # self.real_bunches = np.array_split(self.raw_bunches, len(self.raw_bunches))
             self.avg_hr = np.mean(self.raw_bunches)
 
     # User specified seconds is <= data set time
@@ -228,7 +228,8 @@ class Ecg:
                 self.real_bunches.append(self.raw_bunches[self.indices:-1])
             else:
                 for i in range(1, len(self.indices)):
-                    self.real_bunches.append(self.raw_bunches[self.indices[i-1]:self.indices[i]])
+                    self.real_bunches.append(self.raw_bunches
+                                             [self.indices[i-1]:self.indices[i]])
             for i in range(len(self.real_bunches)):
                 self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
 
@@ -261,14 +262,13 @@ class Ecg:
     def get_output(self):
         """
         Method to save HR output information to a .txt file
-        
         :returns: none
         """
-
         hr_info = open('{}_HR_Information.txt'.format(self.name), 'w')
         hr_info.write("Estimated Instantaneous HR is {} beats per minute.\n"
                       .format(self.raw_bunches))
-        hr_info.write("\nEstimated Average HR is {} beats per minute with an averaging"
+        hr_info.write("\nEstimated Average HR is {}"
+                      " beats per minute with an averaging"
                       " window of {} seconds.\n"
                       .format(self.avg_hr, self.user_sec))
         hr_info.write("\n Tachycardia array is {}.\n".format(self.tachy))

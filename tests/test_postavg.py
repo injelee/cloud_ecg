@@ -11,8 +11,8 @@ from csvtojson_post import csvtojson_post
 def test_output():
     data = csvtojson_post('test_data9_3.csv')
     ecg_data = Ecg(data, update_time=5,
-                    brady_threshold=60, tachy_threshold=100,
-                    user_sec=5, status=1)
+                   brady_threshold=60, tachy_threshold=100,
+                   user_sec=5, status=1)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
@@ -24,8 +24,8 @@ def test_output():
 def test_output_value():
     data = csvtojson_post('test_data9_3.csv')
     ecg_data = Ecg(data, update_time=5,
-                    brady_threshold=60, tachy_threshold=100,
-                    user_sec=5, status=1)
+                   brady_threshold=60, tachy_threshold=100,
+                   user_sec=5, status=1)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
@@ -41,8 +41,8 @@ def test_output_lengths():
     # create sample data for this case
     data = csvtojson_post('test_data9_3.csv')
     ecg_data = Ecg(data, update_time=5,
-                    brady_threshold=60, tachy_threshold=100,
-                    user_sec=5, status=1)
+                   brady_threshold=60, tachy_threshold=100,
+                   user_sec=5, status=1)
     ecg_data.prep_data()
     ecg_data.get_max_peak()
     ecg_data.get_inst_hr()
@@ -50,4 +50,3 @@ def test_output_lengths():
     ecg_data.get_bradtach()
     ecg_data.as_dict()
     assert len(ecg_data.brady) == len(ecg_data.tachy) == 5
-
