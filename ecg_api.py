@@ -1,6 +1,7 @@
 from flask import Flask,jsonify,request
 from bme590hrmfixed.get_ecg3 import Ecg
 from csvtojson import csvtojson
+from csvtojson_post import csvtojson_post
 from multiprocessing import Value
 
 app = Flask(__name__)
@@ -49,7 +50,7 @@ def summary():
     return jsonify(return_summary)
 
 
-@app.route("/api/heart_rate/average/", methods=["Post"])
+@app.route("/api/heart_rate/average", methods=["Post"])
 def jsonavg():
     """
     This module takes in JSON inputs and uses a previously created class to
@@ -60,7 +61,7 @@ def jsonavg():
     """
 
     data1 = request.files['']
-    data = csvtojson(data1)
+    data = csvtojson_post(data1)
     # data = request.json
     try:
         isinstance(data, dict) is True

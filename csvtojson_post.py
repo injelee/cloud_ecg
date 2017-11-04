@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def csvtojson(data):
+def csvtojson_post(data):
     df = pd.read_csv(data, header=None)
     # df = pd.read_csv(r'/Users/injelee/Desktop/test_data9.csv', header=None)
     df.columns = ['averaging_period', 'time', 'voltage']
