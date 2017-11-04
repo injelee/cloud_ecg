@@ -104,6 +104,10 @@ def jsonavg():
 
 
 @app.route("/api/requests")
+def show_count():
+    return jsonify("Number of requests {}".format(counter.value))
+
+
 @app.before_request
 def inc_count():
     """
@@ -112,5 +116,3 @@ def inc_count():
     :return: number of requests in json format
     """
     counter.value += 1
-    count = counter.value
-    return jsonify("Number of requests {}".format(count))
