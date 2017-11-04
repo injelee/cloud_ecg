@@ -1,17 +1,12 @@
 # Heart Rate Monitor with Web Service
-This project is desiging a well-tested web service that performs heart rate calculations including heart rate and brady/tachycardia from ECG data sets.
+This project is desiging a well-tested web service that performs heart rate calculations including heart rate and brady/tachycardia from ECG data sets. It is implemented from a class-based heart rate monitor project, which can be checked through the link below:
+https://github.com/jl3392/bme590hrm
 
 Running method
 ===============
 The main file to run is called "ecg_api.py", which will be deployed on a public facing Virtual Machine (VM) as it would be in industry, allowing service to process requests
 from any internet connected client (e.g. cloud connected ECG device, iOS/Android applications,
 Web applications, etc).
-
-During the running process, it will ask user's input of "user-specified time". It will be used to average the heart rate under 
-the specified time range. 
-Please be sure to convert the time input into minutes.
-For example:
-If user wants to put in time as 300 seconds, please convert it to 5 minutes.
 
 License
 ==============
