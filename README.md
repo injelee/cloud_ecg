@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/injelee/cloud_ecg.svg?branch=master)](https://travis-ci.org/injelee/cloud_ecg.svg?branch=master)
+[![Build Status](https://travis-ci.org/injelee/cloud_ecg.svg?branch=master)](https://travis-ci.org/injelee/cloud_ecg)
 
 # Heart Rate Monitor with Web Service
 This project is desiging a well-tested web service that performs heart rate calculations including heart rate and brady/tachycardia from ECG data sets. It is implemented from a class-based heart rate monitor project, which can be checked through the link below:
@@ -9,6 +9,8 @@ Running method
 The main file to run is called "ecg_api.py", which will be deployed on a public facing Virtual Machine (VM) as it would be in industry, allowing service to process requests
 from any internet connected client (e.g. cloud connected ECG device, iOS/Android applications,
 Web applications, etc).
+Access the VM with the following address:http://vcm-1848.vm.duke.edu:5000/
+
 
 License
 ==============
