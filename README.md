@@ -1,4 +1,4 @@
-# cloud_ecg
+# Heart Rate Monitor with Web Service
 This project is desiging a well-tested web service that performs heart rate calculations including heart rate and brady/tachycardia from ECG data sets.
 
 Running method
