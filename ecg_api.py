@@ -1,6 +1,4 @@
 from flask import Flask,jsonify,request
-import numpy as np 
-import math
 from bme590hrmfixed.get_ecg3 import Ecg
 from csvtojson import csvtojson
 from multiprocessing import Value
@@ -21,19 +19,6 @@ def send_error(message, code):
         "error": message
     }
     return jsonify(err), code
-
-
-@app.route("/api/requests")
-@app.before_request
-def inc_count():
-    """
-    Method that counts number of requests handled by the web service.
-    :params: None
-    :return: number of requests in json format
-    """
-    counter.value += 1
-    count = counter.value
-    return jsonify("Number of requests {}".format(count))
 
 
 @app.route("/api/heart_rate/summary", methods=['POST'])
@@ -62,6 +47,7 @@ def summary():
     data.summary()
     return_summary = data.ecg_summary
     return jsonify(return_summary)
+
 
 @app.route("/api/heart_rate/average/", methods=["Post"])
 def jsonavg():
@@ -115,3 +101,16 @@ def jsonavg():
                           "converted to type=dict.", 500)
 
     return jsonify(json_dict)
+
+
+@app.route("/api/requests")
+@app.before_request
+def inc_count():
+    """
+    Method that counts number of requests handled by the web service.
+    :params: None
+    :return: number of requests in json format
+    """
+    counter.value += 1
+    count = counter.value
+    return jsonify("Number of requests {}".format(count))

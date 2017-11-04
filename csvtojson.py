@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def csvtojson(data):
     df = pd.read_csv(data, header=None)
     df.columns = ['time', 'voltage']
