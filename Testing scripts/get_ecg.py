@@ -228,9 +228,8 @@ class Ecg:
                 self.real_bunches.append(self.raw_bunches[self.indices:-1])
             else:
                 for i in range(1, len(self.indices)):
-                    self.real_bunches.append(self.raw_bunches
-                                             [self.indices[i-1]
-                                             :self.indices[i]])
+                    self.real_bunches.append\
+                        (self.raw_bunches[self.indices[i-1]:self.indices[i]])
             for i in range(len(self.real_bunches)):
                 self.avg_hr.append(np.mean(self.real_bunches[i], axis=0))
 
