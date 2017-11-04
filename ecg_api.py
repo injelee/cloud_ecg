@@ -6,13 +6,22 @@ from csvtojson import csvtojson
 from multiprocessing import Value
 
 app = Flask(__name__)
-counter = Value('i',0)
+counter = Value('i', 0)
+
 
 def send_error(message, code):
+    """
+    This module will be used to throw HTTPS server error codes and
+    messages when we specify them.
+    :param message: Output that user will see
+    :param code: HTTPS server error code
+    :return: jsonified version of message and code
+    """
     err = {
         "error": message
     }
     return jsonify(err), code
+
 
 @app.route("/api/requests")
 @app.before_request
@@ -26,7 +35,34 @@ def inc_count():
     count = counter.value
     return jsonify("Number of requests {}".format(count))
 
-  
+
+@app.route("/api/heart_rate/summary", methods=['POST'])
+def summary():
+    # data = request.json
+    data_raw = request.files['']
+    data = csvtojson(data_raw)
+
+    try:
+        isinstance(data, dict) is True
+    except TypeError:
+        return send_error("The input is not in dict format", 400)  # 400 refers to bad request
+
+    try:
+        len(data["time"]) > 0 and len(data["voltage"]) > 0
+    except ValueError:
+        return send_error("The input is empty ", 400)  # 400 refers to bad request
+
+    data = Ecg(data, update_time=5,
+               brady_threshold=60, tachy_threshold=100, user_sec=10, status=0)
+    data.prep_data()
+    data.get_max_peak()
+    data.get_inst_hr()
+    data.get_avghr()
+    data.get_bradtach()
+    data.summary()
+    return_summary = data.ecg_summary
+    return jsonify(return_summary)
+
 @app.route("/api/heart_rate/average/", methods=["Post"])
 def jsonavg():
     """
