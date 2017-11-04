@@ -19,7 +19,7 @@ def jsonavg():
     """
     This module takes in JSON inputs and uses a previously created class to
     determine average heart rate over an averaging window, as well
-    as outputting brady/tachycardia arrays on both insthr and avghr inputs.
+    as outputting brady/tachycardia arrays on the avghr data.
 
     :return:
     """
