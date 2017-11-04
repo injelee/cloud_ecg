@@ -17,3 +17,4 @@ def inc_count():
     counter.value += 1
     count = counter.value
     return jsonify("Number of requests {}".format(count))
+

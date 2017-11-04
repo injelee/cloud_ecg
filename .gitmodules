@@ -1,0 +1,6 @@
+[submodule "bm590hrm"]
+	path = bm590hrm
+	url = https://github.com/jl3392/bme590hrm
+[submodule "bme590hrmfixed"]
+	path = bme590hrmfixed
+	url = https://github.com/jl3392/bme590hrm
