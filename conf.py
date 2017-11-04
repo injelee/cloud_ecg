@@ -167,6 +167,3 @@ texinfo_documents = [
      author, 'Cloud_ECG', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-
