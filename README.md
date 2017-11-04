@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/injelee/cloud_ecg.svg?branch=master)](https://travis-ci.org/injelee/cloud_ecg.svg?branch=master)
+
 # Heart Rate Monitor with Web Service
 This project is desiging a well-tested web service that performs heart rate calculations including heart rate and brady/tachycardia from ECG data sets. It is implemented from a class-based heart rate monitor project, which can be checked through the link below:
 https://github.com/jl3392/bme590hrm
@@ -15,7 +17,7 @@ from contributors to users.
 
 Documentation
 ==============
-The latest documentation is automatically generated using Sphinx and can be found through the link below:
+The latest documentation is automatically generated using Sphinx and we're working on getting an accessible link. Stay tuned for updates! 
 
 
 Contributors

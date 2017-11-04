@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from bme590hrmfixed.get_ecg3 import Ecg
-from tests.csvtojson import csvtojson
-from tests.csvtojson_post import csvtojson_post
+# from tests.csvtojson import csvtojson
+# from tests.csvtojson_post import csvtojson_post
 from multiprocessing import Value
 
 app = Flask(__name__)
@@ -24,9 +24,9 @@ def send_error(message, code):
 
 @app.route("/api/heart_rate/summary", methods=['POST'])
 def summary():
-    # data = request.json
-    data_raw = request.files['']
-    data = csvtojson(data_raw)
+    data = request.json
+    # data_raw = request.files['']
+    # data = csvtojson(data_raw)
 
     try:
         isinstance(data, dict) is True
@@ -62,9 +62,9 @@ def jsonavg():
     :return:
     """
 
-    data1 = request.files['']
-    data = csvtojson_post(data1)
-    # data = request.json
+    # data1 = request.files['']
+    # data = csvtojson_post(data1)
+    data = request.json
     try:
         isinstance(data, dict) is True
     except TypeError:
