@@ -15,7 +15,7 @@ from contributors to users.
 
 Documentation
 ==============
-The latest documentation is automatically generated using Sphinx and can be found through the link below:
+The latest documentation is automatically generated using Sphinx and we're working on getting an accessible link. Stay tuned for updates! 
 
 
 Contributors
