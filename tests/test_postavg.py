@@ -5,13 +5,13 @@ Creating test class for average HR and brady/tachycardia data
 
 import unittest
 from bme590hrmfixed.get_ecg3 import Ecg
-from csvtojson import csvtojson
+from tests.csvtojson_post import csvtojson_post
 
 
-class test_average_hr(unittest.TestCase):
+class test_averagehr(unittest.TestCase):
 
     def test_output(self):
-        data = csvtojson('/Users/injelee/Desktop/test_data9_3.csv')
+        data = csvtojson_post('test_data9_3.csv')
         ecg_data = Ecg(data, update_time=5,
                        brady_threshold=60, tachy_threshold=100,
                        user_sec=5, status=1)
@@ -23,7 +23,7 @@ class test_average_hr(unittest.TestCase):
         assert isinstance(ecg_data.ecg_dict, dict) is True
 
     def test_output_value(self):
-        data = csvtojson('/Users/injelee/Desktop/test_data9_3.csv')
+        data = csvtojson('test_data9_3.csv')
         ecg_data = Ecg(data, update_time=5,
                        brady_threshold=60, tachy_threshold=100,
                        user_sec=5, status=1)
@@ -39,7 +39,7 @@ class test_average_hr(unittest.TestCase):
 
     def test_output_lengths(self):
         # create sample data for this case
-        data = csvtojson('/Users/injelee/Desktop/test_data9_3.csv')
+        data = csvtojson('test_data9_3.csv')
         ecg_data = Ecg(data, update_time=5,
                        brady_threshold=60, tachy_threshold=100,
                        user_sec=5, status=1)

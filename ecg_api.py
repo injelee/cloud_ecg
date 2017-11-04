@@ -1,7 +1,7 @@
 from flask import Flask,jsonify,request
 from bme590hrmfixed.get_ecg3 import Ecg
-from csvtojson import csvtojson
-from csvtojson_post import csvtojson_post
+from tests.csvtojson import csvtojson
+from tests.csvtojson_post import csvtojson_post
 from multiprocessing import Value
 
 app = Flask(__name__)
